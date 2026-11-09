@@ -1,0 +1,77 @@
+--- kode-asli-kakak.ino
++++ src/main.cpp (Pico W, VS Code)
+@@ -1,9 +1,35 @@
++#include <Arduino.h>
+ #include <Servo.h>
+
+ Servo T1, T2, T3, T4;
+
+ const int STOP = 1500;
+ const int SLOW = 100;
++
++int CW() {
++  return STOP + SLOW;
++}
++
++int CCW() {
++  return STOP - SLOW;
++}
++
++void stopAll() {
++  T1.writeMicroseconds(STOP);
++  T2.writeMicroseconds(STOP);
++  T3.writeMicroseconds(STOP);
++  T4.writeMicroseconds(STOP);
++  delay(1000);
++}
++
++void move(int t1, int t2, int t3, int t4) {
++  T1.writeMicroseconds(t1);
++  T2.writeMicroseconds(t2);
++  T3.writeMicroseconds(t3);
++  T4.writeMicroseconds(t4);
++  delay(2000);
++  stopAll();
++}
+
+ void setup() {
+   T1.attach(2);
+@@ -16,7 +42,6 @@
+ }
+
+ void loop() {
+-
+   // 1. DIAM
+   move(STOP, STOP, STOP, STOP);
+
+@@ -62,30 +87,3 @@
+   // 15. ROTASI KIRI + TURUN
+   move(CCW(), CW(), CCW(), CCW());
+ }
+-
+-//////////////////// FUNCTIONS ////////////////////
+-
+-int CW() {
+-  return STOP + SLOW;
+-}
+-
+-int CCW() {
+-  return STOP - SLOW;
+-}
+-
+-void move(int t1, int t2, int t3, int t4) {
+-  T1.writeMicroseconds(t1);
+-  T2.writeMicroseconds(t2);
+-  T3.writeMicroseconds(t3);
+-  T4.writeMicroseconds(t4);
+-  delay(2000);
+-  stopAll();
+-}
+-
+-void stopAll() {
+-  T1.writeMicroseconds(STOP);
+-  T2.writeMicroseconds(STOP);
+-  T3.writeMicroseconds(STOP);
+-  T4.writeMicroseconds(STOP);
+-  delay(1000);
+-}
